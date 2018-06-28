@@ -1,0 +1,367 @@
+object MainForm: TMainForm
+  Left = 388
+  Height = 531
+  Top = 250
+  Width = 856
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'PascalCoinKeyTool v0.3 By Xor-el (https://github.com/xor-el)'
+  ClientHeight = 531
+  ClientWidth = 856
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clBlack
+  Font.Height = -13
+  Font.Name = 'Constantia'
+  Font.Pitch = fpVariable
+  Font.Quality = fqDraft
+  OnCreate = FormCreate
+  Position = poDesktopCenter
+  ShowHint = True
+  LCLVersion = '1.9.0.0'
+  object MainPanel: TPanel
+    Left = 16
+    Height = 504
+    Top = 16
+    Width = 833
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    ClientHeight = 504
+    ClientWidth = 833
+    TabOrder = 0
+    object MainPageControl: TPageControl
+      Left = -8
+      Height = 432
+      Top = 72
+      Width = 840
+      ActivePage = tbsGenerateKeyPair
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      TabIndex = 0
+      TabOrder = 0
+      object tbsGenerateKeyPair: TTabSheet
+        Caption = 'GenerateKeyPair'
+        ClientHeight = 404
+        ClientWidth = 832
+        object mmoLoggerMemo: TMemo
+          Left = 16
+          Height = 304
+          Top = 56
+          Width = 808
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+        object btnGenerateKeyPair: TButton
+          Left = 749
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akRight, akBottom]
+          Caption = 'Generate'
+          OnClick = btnGenerateKeyPairClick
+          TabOrder = 1
+        end
+        object btnClearLogger: TButton
+          Left = 16
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akLeft, akBottom]
+          Caption = 'Clear'
+          OnClick = btnClearLoggerClick
+          TabOrder = 2
+        end
+        object edtEncryptPassword: TEdit
+          Left = 16
+          Height = 23
+          Top = 16
+          Width = 136
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Constantia'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          ParentFont = False
+          TabOrder = 3
+          TextHint = 'Private Key Password'
+        end
+      end
+      object tbsStressTest: TTabSheet
+        Caption = 'Stress Test'
+        ClientHeight = 404
+        ClientWidth = 832
+        object mmoStressTestLoggerMemo: TMemo
+          Left = 16
+          Height = 248
+          Top = 112
+          Width = 808
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+        object edtMessageToSign: TEdit
+          Left = 16
+          Height = 23
+          Top = 72
+          Width = 808
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 1
+          TextHint = 'Message To Sign'
+        end
+        object btnClearStressTestMemoLogger: TButton
+          Left = 16
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akLeft, akBottom]
+          Caption = 'Clear'
+          OnClick = btnClearStressTestMemoLoggerClick
+          TabOrder = 2
+        end
+        object btnStressTest: TButton
+          Left = 640
+          Height = 25
+          Top = 368
+          Width = 184
+          Anchors = [akRight, akBottom]
+          Caption = 'Stress Test'
+          OnClick = btnStressTestClick
+          TabOrder = 3
+        end
+        object speIterationCount: TSpinEdit
+          Left = 750
+          Height = 23
+          Top = 26
+          Width = 74
+          MaxValue = 1000
+          MinValue = 1
+          TabOrder = 4
+          Value = 1
+        end
+      end
+      object tbsEncryptDecryptPrivateKey: TTabSheet
+        Caption = 'Encrypt/Decrypt PrivateKey'
+        ClientHeight = 404
+        ClientWidth = 832
+        object edtPrivateKeyPassword: TEdit
+          Left = 16
+          Height = 23
+          Top = 16
+          Width = 136
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Constantia'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          ParentFont = False
+          TabOrder = 0
+        end
+        object mmoPrivateKeyLoggerMemo: TMemo
+          Left = 16
+          Height = 248
+          Top = 112
+          Width = 808
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 1
+        end
+        object btnClearPrivateKeyMemoLogger: TButton
+          Left = 16
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akLeft, akBottom]
+          Caption = 'Clear'
+          OnClick = btnClearPrivateKeyMemoLoggerClick
+          TabOrder = 2
+        end
+        object btnEncryptDecryptPrivateKey: TButton
+          Left = 749
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akRight, akBottom]
+          Caption = '....'
+          OnClick = btnEncryptDecryptPrivateKeyClick
+          TabOrder = 3
+        end
+        object edtPrivateKey: TEdit
+          Left = 16
+          Height = 23
+          Top = 69
+          Width = 808
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 4
+        end
+        object cmbPrivateKeyEncryptionModes: TComboBox
+          Left = 676
+          Height = 23
+          Top = 16
+          Width = 148
+          Anchors = [akTop, akRight]
+          ItemHeight = 15
+          OnChange = cmbPrivateKeyEncryptionModesChange
+          Style = csDropDownList
+          TabOrder = 5
+        end
+      end
+      object tbsAESEncryptDecrypt: TTabSheet
+        Caption = 'Encrypt/Decrypt AES Payload'
+        ClientHeight = 404
+        ClientWidth = 832
+        object edtAESPayloadPassword: TEdit
+          Left = 16
+          Height = 23
+          Top = 16
+          Width = 136
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Constantia'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          ParentFont = False
+          TabOrder = 0
+        end
+        object cmbAESEncryptionModes: TComboBox
+          Left = 676
+          Height = 23
+          Top = 16
+          Width = 148
+          Anchors = [akTop, akRight]
+          ItemHeight = 15
+          OnChange = cmbAESEncryptionModesChange
+          Style = csDropDownList
+          TabOrder = 1
+        end
+        object edtAESPayload: TEdit
+          Left = 16
+          Height = 23
+          Top = 72
+          Width = 808
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 2
+        end
+        object mmoAESLoggerMemo: TMemo
+          Left = 16
+          Height = 248
+          Top = 112
+          Width = 808
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 3
+        end
+        object btnClearAESMemoLogger: TButton
+          Left = 16
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akLeft, akBottom]
+          Caption = 'Clear'
+          OnClick = btnClearAESMemoLoggerClick
+          TabOrder = 4
+        end
+        object btnAESEncryptDecrypt: TButton
+          Left = 640
+          Height = 25
+          Top = 368
+          Width = 184
+          Anchors = [akRight, akBottom]
+          Caption = '....'
+          OnClick = btnAESEncryptDecryptClick
+          TabOrder = 5
+        end
+      end
+      object tbsECIESEncryptDecrypt: TTabSheet
+        Caption = 'Encrypt/Decrypt ECIES Payload'
+        ClientHeight = 404
+        ClientWidth = 832
+        object edtECIESPrivateKeyPassword: TEdit
+          Left = 16
+          Height = 23
+          Top = 16
+          Width = 136
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Constantia'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          ParentFont = False
+          TabOrder = 0
+        end
+        object cmbECIESEncryptionModes: TComboBox
+          Left = 676
+          Height = 23
+          Top = 16
+          Width = 148
+          Anchors = [akTop, akRight]
+          ItemHeight = 15
+          OnChange = cmbECIESEncryptionModesChange
+          Style = csDropDownList
+          TabOrder = 1
+        end
+        object edtECIESKey: TEdit
+          Left = 16
+          Height = 23
+          Top = 69
+          Width = 808
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 2
+        end
+        object mmoECIESLoggerMemo: TMemo
+          Left = 16
+          Height = 224
+          Top = 136
+          Width = 808
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ReadOnly = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 3
+        end
+        object btnClearECIESMemoLogger: TButton
+          Left = 16
+          Height = 25
+          Top = 368
+          Width = 75
+          Anchors = [akLeft, akBottom]
+          Caption = 'Clear'
+          OnClick = btnClearECIESMemoLoggerClick
+          TabOrder = 4
+        end
+        object btnECIESEncryptDecrypt: TButton
+          Left = 640
+          Height = 25
+          Top = 368
+          Width = 184
+          Anchors = [akRight, akBottom]
+          Caption = '....'
+          OnClick = btnECIESEncryptDecryptClick
+          TabOrder = 5
+        end
+        object edtECIESPayload: TEdit
+          Left = 16
+          Height = 23
+          Top = 100
+          Width = 808
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 6
+        end
+      end
+    end
+    object cmbKeyTypes: TComboBox
+      Left = 676
+      Height = 23
+      Top = 16
+      Width = 148
+      Anchors = [akTop, akRight]
+      ItemHeight = 15
+      Style = csDropDownList
+      TabOrder = 1
+    end
+  end
+end
