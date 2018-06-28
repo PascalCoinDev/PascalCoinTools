@@ -6,7 +6,7 @@ Repository for External Tools Created For PascalCoin By ThirdParties.
 
 ```
 1) The Base Directory Must Be Kept Clean
-Every Tools Must Be Housed In Its Own Respective Directory Inside The Base Folder To Keep Things Tidy. 
+Every Tool Must Be Housed In Its Own Respective Directory Inside The Base Folder "Tools" To Keep Things Tidy. 
 
 2) Appropriate Instructions Must Be Given On How To Use/Compile The Provided Tools.
 
