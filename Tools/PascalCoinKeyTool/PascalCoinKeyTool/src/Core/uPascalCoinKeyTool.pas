@@ -164,7 +164,7 @@ end;
 
 class function TPascalCoinKeyTool.ComputeSHA2_256_ToBytes(const AInput: TBytes): TBytes;
 begin
-  Result := TDigestUtilities.GetDigest('SHA-256').ComputeBytes(AInput).GetBytes();
+  Result := TDigestUtilities.CalculateDigest('SHA-256', AInput);
 end;
 
 class function TPascalCoinKeyTool.ComputeBase16EncodeUpper(const AInput: TBytes): string;
@@ -599,20 +599,24 @@ begin
   System.SetLength(AIVBytes, LKey);
   // Max size to start then reduce it at the end
   LDigest := TDigestUtilities.GetDigest('SHA-256'); // SHA2_256
-  System.Assert(LDigest.HashSize >= LKey);
-  System.Assert(LDigest.HashSize >= LIV);
+  System.Assert(LDigest.GetDigestSize >= LKey);
+  System.Assert(LDigest.GetDigestSize >= LIV);
   // Derive Key First
-  LDigest.TransformBytes(APasswordBytes);
-  if ASaltBytes <> nil then
-    LDigest.TransformBytes(ASaltBytes);
-  AKeyBytes := System.Copy(LDigest.TransformFinal.GetBytes);
+  LDigest.BlockUpdate(APasswordBytes, 0, System.Length(APasswordBytes));
+  if ASaltBytes <> Nil then
+  begin
+    LDigest.BlockUpdate(ASaltBytes, 0, System.Length(ASaltBytes));
+  end;
+  LDigest.DoFinal(AKeyBytes, 0);
   // Derive IV Next
-  LDigest.Initialize();
-  LDigest.TransformBytes(AKeyBytes);
-  LDigest.TransformBytes(APasswordBytes);
-  if ASaltBytes <> nil then
-    LDigest.TransformBytes(ASaltBytes);
-  AIVBytes := System.Copy(LDigest.TransformFinal.GetBytes);
+  LDigest.Reset();
+  LDigest.BlockUpdate(AKeyBytes, 0, System.Length(AKeyBytes));
+  LDigest.BlockUpdate(APasswordBytes, 0, System.Length(APasswordBytes));
+  if ASaltBytes <> Nil then
+  begin
+    LDigest.BlockUpdate(ASaltBytes, 0, System.Length(ASaltBytes));
+  end;
+  LDigest.DoFinal(AIVBytes, 0);
 
   System.SetLength(AIVBytes, LIV);
   Result := True;
