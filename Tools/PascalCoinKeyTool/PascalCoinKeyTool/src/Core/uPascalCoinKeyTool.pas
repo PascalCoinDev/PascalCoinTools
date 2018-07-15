@@ -30,6 +30,7 @@ uses
   ClpIECDHBasicAgreement,
   ClpIECDomainParameters,
   ClpIECPublicKeyParameters,
+  ClpIECKeyGenerationParameters,
   ClpIECPrivateKeyParameters,
   ClpIAsymmetricCipherKeyPair,
   ClpIIESWithCipherParameters,
@@ -537,7 +538,7 @@ var
   PlainTextBytes, PasswordBytes: TBytes;
 begin
   PlainTextBytes := ComputeBase16Decode(APascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(APassword);
+  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
   Result := ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PlainTextBytes,
     PasswordBytes);
 end;
@@ -547,7 +548,7 @@ var
   CipherTextBytes, PasswordBytes: TBytes;
 begin
   CipherTextBytes := ComputeBase16Decode(AEncryptedPascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(APassword);
+  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
   Result := ComputeAES256_CBC_PKCS7PADDING_PascalCoinDecrypt(CipherTextBytes,
     PasswordBytes, ADecryptedPascalCoinPrivateKey);
 end;
@@ -644,7 +645,7 @@ begin
 
   LBufStart := 0;
 
-  System.Move(TEncoding.UTF8.GetBytes(SALT_MAGIC)[0], Buf[LBufStart],
+  System.Move(TEncoding.UTF8.GetBytes(UnicodeString(SALT_MAGIC))[0], Buf[LBufStart],
     SALT_MAGIC_LEN * System.SizeOf(byte));
   System.Inc(LBufStart, SALT_MAGIC_LEN);
   System.Move(SaltBytes[0], Buf[LBufStart],
@@ -674,7 +675,7 @@ begin
     // First read the magic text and the salt - if any
     Chopped := System.Copy(ACipherTextBytes, 0, SALT_MAGIC_LEN);
     if (System.Length(ACipherTextBytes) >= SALT_MAGIC_LEN) and
-      (TArrayUtils.AreEqual(Chopped, TEncoding.UTF8.GetBytes(SALT_MAGIC))) then
+      (TArrayUtils.AreEqual(Chopped, TEncoding.UTF8.GetBytes(UnicodeString(SALT_MAGIC)))) then
     begin
       System.Move(ACipherTextBytes[SALT_MAGIC_LEN], SaltBytes[0], SALT_SIZE);
       if not EVP_GetKeyIV(APasswordBytes, SaltBytes, KeyBytes, IVBytes) then
@@ -751,7 +752,7 @@ var
   PascalCoinPrivateKeyBytes, PasswordBytes: TBytes;
 begin
   PascalCoinPrivateKeyBytes := ComputeBase16Decode(APascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(APassword);
+  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
   Result := ComputeBase16EncodeUpper(ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PascalCoinPrivateKeyBytes,
     PasswordBytes));
 end;
@@ -767,7 +768,7 @@ begin
   Domain := TECDomainParameters.Create(LCurve.Curve, LCurve.G, LCurve.N,
     LCurve.H, LCurve.GetSeed);
   KeyPairGeneratorInstance.Init(TECKeyGenerationParameters.Create(Domain,
-    FRandom));
+    FRandom) as IECKeyGenerationParameters);
   Result := KeyPairGeneratorInstance.GenerateKeyPair();
 end;
 
@@ -946,7 +947,7 @@ begin
 
   Logger.Append(Format('Payload To Encrypt is "%s"', [APayloadToEncrypt]));
 
-  PayloadToEncrypt := TEncoding.UTF8.GetBytes(APayloadToEncrypt);
+  PayloadToEncrypt := TEncoding.UTF8.GetBytes(UnicodeString(APayloadToEncrypt));
 
   if not ExtractAffineXFromPascalCoinPublicKey(LPascalCoinPublicKey, AffineXCoord) then
   begin
@@ -1058,11 +1059,11 @@ begin
 
   Logger.Append(Format('Encryption Password is %s', [APassword]));
 
-  PasswordBytes := TEncoding.UTF8.GetBytes(APassword);
+  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
 
   Logger.Append(Format('Payload to Encrypt is "%s"', [APayloadToEncrypt]));
 
-  PayloadToEncryptBytes := TEncoding.UTF8.GetBytes(APayloadToEncrypt);
+  PayloadToEncryptBytes := TEncoding.UTF8.GetBytes(UnicodeString(APayloadToEncrypt));
 
   EncryptedPayloadBytes := ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PayloadToEncryptBytes, PasswordBytes);
 
@@ -1086,7 +1087,7 @@ begin
 
   Logger.Append(Format('Decryption Password is %s', [APassword]));
 
-  PasswordBytes := TEncoding.UTF8.GetBytes(APassword);
+  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
 
   Logger.Append(Format('Payload to Decrypt is "%s"', [APayloadToDecrypt]));
 
@@ -1137,7 +1138,7 @@ begin
 
   Logger.Append(Format('Iteration Count is %d', [AIterationCount]));
 
-  LMessage := TEncoding.UTF8.GetBytes(AMessage);
+  LMessage := TEncoding.UTF8.GetBytes(UnicodeString(AMessage));
 
   PassedCount := 0;
 
