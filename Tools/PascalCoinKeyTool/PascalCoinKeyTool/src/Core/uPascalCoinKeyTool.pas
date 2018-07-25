@@ -265,7 +265,7 @@ end;
 class function TPascalCoinKeyTool.GetSignAsString(ASign: Int32): string;
 begin
   case ASign of
-    -1: Result := 'Negative';
+   -1: Result := 'Negative';
     0: Result := 'Zero';
     1: Result := 'Positive'
     else
@@ -417,7 +417,7 @@ var
   MacKeySizeInBits, CipherKeySizeInBits: Int32;
   UsePointCompression: boolean;
 begin
-  // Set up  IES Cipher Parameters For Compatibility With PascalCoin Current Implementation
+  // Set up IES Cipher Parameters For Compatibility With PascalCoin Current Implementation
 
   // The derivation and encoding vectors are used when initialising the KDF and MAC.
   // They're optional but if used then they need to be known by the other user so that
@@ -527,7 +527,7 @@ begin
   domain := TECDomainParameters.Create(LCurve.Curve, LCurve.G, LCurve.N,
     LCurve.H, LCurve.GetSeed);
 
-  PrivD := TBigInteger.Create(APrivateKey);
+  PrivD := TBigInteger.Create(1, APrivateKey);
 
   Result := TECPrivateKeyParameters.Create('ECDSA',
     PrivD, domain);
