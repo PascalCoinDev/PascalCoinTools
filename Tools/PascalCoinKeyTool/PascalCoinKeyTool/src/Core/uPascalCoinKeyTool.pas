@@ -48,7 +48,7 @@ uses
   ClpCryptoLibTypes,
   ClpCbcBlockCipher,
   ClpSecureRandom,
-  ClpSecNamedCurves,
+  ClpCustomNamedCurves,
   ClpMacUtilities,
   ClpCipherUtilities,
   ClpDigestUtilities,
@@ -193,7 +193,7 @@ var
   CurveName: string;
 begin
   CurveName := GetEnumName(TypeInfo(TKeyType), Ord(AKeyType));
-  Result := TSecNamedCurves.GetByName(CurveName);
+  Result := TCustomNamedCurves.GetByName(CurveName);
 end;
 
 class function TPascalCoinKeyTool.RetrieveKeyType(AValue: Int32): TKeyType;
