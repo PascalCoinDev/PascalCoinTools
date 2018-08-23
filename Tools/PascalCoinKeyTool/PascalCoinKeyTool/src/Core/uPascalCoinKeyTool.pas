@@ -538,7 +538,7 @@ var
   PlainTextBytes, PasswordBytes: TBytes;
 begin
   PlainTextBytes := ComputeBase16Decode(APascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
+  PasswordBytes := TConverters.ConvertStringToBytes(APassword, TEncoding.UTF8);
   Result := ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PlainTextBytes,
     PasswordBytes);
 end;
@@ -548,7 +548,7 @@ var
   CipherTextBytes, PasswordBytes: TBytes;
 begin
   CipherTextBytes := ComputeBase16Decode(AEncryptedPascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
+  PasswordBytes := TConverters.ConvertStringToBytes(APassword, TEncoding.UTF8);
   Result := ComputeAES256_CBC_PKCS7PADDING_PascalCoinDecrypt(CipherTextBytes,
     PasswordBytes, ADecryptedPascalCoinPrivateKey);
 end;
@@ -645,7 +645,7 @@ begin
 
   LBufStart := 0;
 
-  System.Move(TEncoding.UTF8.GetBytes(UnicodeString(SALT_MAGIC))[0], Buf[LBufStart],
+  System.Move(TConverters.ConvertStringToBytes(SALT_MAGIC, TEncoding.UTF8)[0], Buf[LBufStart],
     SALT_MAGIC_LEN * System.SizeOf(byte));
   System.Inc(LBufStart, SALT_MAGIC_LEN);
   System.Move(SaltBytes[0], Buf[LBufStart],
@@ -675,7 +675,7 @@ begin
     // First read the magic text and the salt - if any
     Chopped := System.Copy(ACipherTextBytes, 0, SALT_MAGIC_LEN);
     if (System.Length(ACipherTextBytes) >= SALT_MAGIC_LEN) and
-      (TArrayUtils.AreEqual(Chopped, TEncoding.UTF8.GetBytes(UnicodeString(SALT_MAGIC)))) then
+      (TArrayUtils.AreEqual(Chopped, TConverters.ConvertStringToBytes(SALT_MAGIC, TEncoding.UTF8))) then
     begin
       System.Move(ACipherTextBytes[SALT_MAGIC_LEN], SaltBytes[0], SALT_SIZE);
       if not EVP_GetKeyIV(APasswordBytes, SaltBytes, KeyBytes, IVBytes) then
@@ -752,7 +752,7 @@ var
   PascalCoinPrivateKeyBytes, PasswordBytes: TBytes;
 begin
   PascalCoinPrivateKeyBytes := ComputeBase16Decode(APascalCoinPrivateKey);
-  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
+  PasswordBytes := TConverters.ConvertStringToBytes(APassword, TEncoding.UTF8);
   Result := ComputeBase16EncodeUpper(ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PascalCoinPrivateKeyBytes,
     PasswordBytes));
 end;
@@ -947,7 +947,7 @@ begin
 
   Logger.Append(Format('Payload To Encrypt is "%s"', [APayloadToEncrypt]));
 
-  PayloadToEncrypt := TEncoding.UTF8.GetBytes(UnicodeString(APayloadToEncrypt));
+  PayloadToEncrypt := TConverters.ConvertStringToBytes(APayloadToEncrypt, TEncoding.UTF8);
 
   if not ExtractAffineXFromPascalCoinPublicKey(LPascalCoinPublicKey, AffineXCoord) then
   begin
@@ -1039,7 +1039,7 @@ begin
   if ComputeECIESPascalCoinDecrypt(RecreatedPrivateKey, PayloadToDecrypt, DecryptedPayload) then
   begin
     Logger.Append('Payload Decrypted Successfully.');
-    Logger.Append(Format('Decrypted Payload is "%s"', [TEncoding.UTF8.GetString(DecryptedPayload)]));
+    Logger.Append(Format('Decrypted Payload is "%s"', [TConverters.ConvertBytesToString(DecryptedPayload, TEncoding.UTF8)]));
   end
   else
     Logger.Append('An Error Occured While Decrypting Payload.');
@@ -1059,11 +1059,11 @@ begin
 
   Logger.Append(Format('Encryption Password is %s', [APassword]));
 
-  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
+  PasswordBytes := TConverters.ConvertStringToBytes(APassword, TEncoding.UTF8);
 
   Logger.Append(Format('Payload to Encrypt is "%s"', [APayloadToEncrypt]));
 
-  PayloadToEncryptBytes := TEncoding.UTF8.GetBytes(UnicodeString(APayloadToEncrypt));
+  PayloadToEncryptBytes := TConverters.ConvertStringToBytes(APayloadToEncrypt, TEncoding.UTF8);
 
   EncryptedPayloadBytes := ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(PayloadToEncryptBytes, PasswordBytes);
 
@@ -1087,7 +1087,7 @@ begin
 
   Logger.Append(Format('Decryption Password is %s', [APassword]));
 
-  PasswordBytes := TEncoding.UTF8.GetBytes(UnicodeString(APassword));
+  PasswordBytes := TConverters.ConvertStringToBytes(APassword, TEncoding.UTF8);
 
   Logger.Append(Format('Payload to Decrypt is "%s"', [APayloadToDecrypt]));
 
@@ -1105,7 +1105,7 @@ begin
   if DecryptedSuccessfully then
   begin
     Logger.Append('Payload Decrypted Successfully.');
-    Logger.Append(Format('Decrypted Payload is "%s"', [TEncoding.UTF8.GetString(DecryptedPayloadBytes)]));
+    Logger.Append(Format('Decrypted Payload is "%s"', [TConverters.ConvertBytesToString(DecryptedPayloadBytes, TEncoding.UTF8)]));
   end
   else
     Logger.Append('An Error Occurred While Decrypting Payload.');
@@ -1138,7 +1138,7 @@ begin
 
   Logger.Append(Format('Iteration Count is %d', [AIterationCount]));
 
-  LMessage := TEncoding.UTF8.GetBytes(UnicodeString(AMessage));
+  LMessage := TConverters.ConvertStringToBytes(AMessage, TEncoding.UTF8);
 
   PassedCount := 0;
 
