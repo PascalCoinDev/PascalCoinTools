@@ -724,9 +724,9 @@ class function TPascalCoinKeyTool.GetPascalCoinPublicKeyAsHexString(AKeyType: TK
 var
   PartX, PartY, TotalPart: TBytes;
 begin
-  PartX := TArrayUtils.AddByteArray(GetAffineXPrefix(AKeyType, AXInput), AXInput);
-  PartY := TArrayUtils.AddByteArray(GetAffineYPrefix(AYInput), AYInput);
-  TotalPart := TArrayUtils.AddByteArray(PartX, PartY);
+  PartX := TArrayUtils.Concatenate(GetAffineXPrefix(AKeyType, AXInput), AXInput);
+  PartY := TArrayUtils.Concatenate(GetAffineYPrefix(AYInput), AYInput);
+  TotalPart := TArrayUtils.Concatenate(PartX, PartY);
   Result := ComputeBase16EncodeUpper(TotalPart);
 end;
 
@@ -738,13 +738,13 @@ var
 begin
   PascalCoinPublicKeyBytes := ComputeBase16Decode(APascalCoinPublicKey);
   Base58PublicKeyBytes := ComputeBase16Decode(B58_PUBKEY_PREFIX);
-  PreBase58PublicKeyBytes := TArrayUtils.AddByteArray(TArrayUtils.AddByteArray(Base58PublicKeyBytes, PascalCoinPublicKeyBytes), System.Copy(ComputeSHA2_256_ToBytes(PascalCoinPublicKeyBytes), 0, 4));
+  PreBase58PublicKeyBytes := TArrayUtils.Concatenate(TArrayUtils.Concatenate(Base58PublicKeyBytes, PascalCoinPublicKeyBytes), System.Copy(ComputeSHA2_256_ToBytes(PascalCoinPublicKeyBytes), 0, 4));
   Result := ComputeBase58Encode(PreBase58PublicKeyBytes);
 end;
 
 class function TPascalCoinKeyTool.GetPascalCoinPrivateKeyAsHexString(AKeyType: TKeyType; const AInput: TBytes): string;
 begin
-  Result := ComputeBase16EncodeUpper(TArrayUtils.AddByteArray(GetPrivateKeyPrefix(AKeyType, AInput), AInput));
+  Result := ComputeBase16EncodeUpper(TArrayUtils.Concatenate(GetPrivateKeyPrefix(AKeyType, AInput), AInput));
 end;
 
 class function TPascalCoinKeyTool.GetPascalCoinPrivateKeyEncryptedAsHexString(const APascalCoinPrivateKey, APassword: string): string;
@@ -859,7 +859,7 @@ begin
     Exit;
   end;
 
-  LPascalCoinPrivateKey := ComputeBase16EncodeUpper(TArrayUtils.AddByteArray(GetPrivateKeyPrefix(AKeyType, ComputeBase16Decode(APrivateKeyToEncrypt)), ComputeBase16Decode(APrivateKeyToEncrypt)));
+  LPascalCoinPrivateKey := ComputeBase16EncodeUpper(TArrayUtils.Concatenate(GetPrivateKeyPrefix(AKeyType, ComputeBase16Decode(APrivateKeyToEncrypt)), ComputeBase16Decode(APrivateKeyToEncrypt)));
   Logger.Append(Format('PascalCoin Private Key is %s', [LPascalCoinPrivateKey]));
   Logger.Append(Format('Password To Use For Encryption is %s', [APassword]));
 
