@@ -16,7 +16,6 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   Position = poDesktopCenter
   ShowHint = True
-  LCLVersion = '1.9.0.0'
   object MainPanel: TPanel
     Left = 16
     Height = 504
@@ -134,6 +133,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 26
           Width = 74
+          Anchors = [akTop, akRight]
           MaxValue = 1000
           MinValue = 1
           TabOrder = 4
