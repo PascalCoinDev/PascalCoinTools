@@ -249,7 +249,7 @@ end;
 
 class function TPascalCoinKeyTool.GetAffineXPrefix(AKeyType: TKeyType; const AInput: TBytes): TBytes;
 begin
-  Result := UInt32ToLittleEndianByteArrayTwoBytes(UInt32(GetKeyTypeNumericValue(AKeyType))) + UInt32ToLittleEndianByteArrayTwoBytes(System.Length(AInput));
+  Result := TArrayUtils.Concatenate(UInt32ToLittleEndianByteArrayTwoBytes(UInt32(GetKeyTypeNumericValue(AKeyType))), UInt32ToLittleEndianByteArrayTwoBytes(System.Length(AInput)));
 end;
 
 class function TPascalCoinKeyTool.GetAffineYPrefix(const AInput: TBytes): TBytes;
@@ -259,7 +259,7 @@ end;
 
 class function TPascalCoinKeyTool.GetPrivateKeyPrefix(AKeyType: TKeyType; const AInput: TBytes): TBytes;
 begin
-  Result := UInt32ToLittleEndianByteArrayTwoBytes(UInt32(GetKeyTypeNumericValue(AKeyType))) + UInt32ToLittleEndianByteArrayTwoBytes(System.Length(AInput));
+  Result := TArrayUtils.Concatenate(UInt32ToLittleEndianByteArrayTwoBytes(UInt32(GetKeyTypeNumericValue(AKeyType))), UInt32ToLittleEndianByteArrayTwoBytes(System.Length(AInput)));
 end;
 
 class function TPascalCoinKeyTool.GetSignAsString(ASign: Int32): string;
