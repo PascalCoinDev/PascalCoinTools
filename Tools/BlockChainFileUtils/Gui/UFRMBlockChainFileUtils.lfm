@@ -1,0 +1,219 @@
+object FRMBlockChainFileUtils: TFRMBlockChainFileUtils
+  Left = 588
+  Height = 487
+  Top = 288
+  Width = 697
+  Caption = 'PascalCoin BlockChain File Utils'
+  ClientHeight = 487
+  ClientWidth = 697
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.8.0.6'
+  object pnlTop: TPanel
+    Left = 0
+    Height = 201
+    Top = 0
+    Width = 697
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 201
+    ClientWidth = 697
+    TabOrder = 0
+    object bbSelFile: TButton
+      Left = 8
+      Height = 25
+      Top = 15
+      Width = 145
+      Caption = 'Select blockchain File'
+      OnClick = bbSelFileClick
+      TabOrder = 0
+    end
+    object ebFileName: TEdit
+      Left = 165
+      Height = 21
+      Top = 15
+      Width = 521
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object PageControl: TPageControl
+      Left = 8
+      Height = 150
+      Top = 46
+      Width = 678
+      ActivePage = tsExportBlockchainFile
+      TabIndex = 1
+      TabOrder = 2
+      object tsInfo: TTabSheet
+        Caption = 'Information'
+        ClientHeight = 0
+        ClientWidth = 0
+        object bbShowBlocksInfo: TButton
+          Left = 15
+          Height = 25
+          Top = 14
+          Width = 225
+          Caption = 'Show blocks Info'
+          OnClick = bbShowBlocksInfoClick
+          TabOrder = 0
+        end
+      end
+      object tsExportBlockchainFile: TTabSheet
+        Caption = 'Export Blockchain file'
+        ClientHeight = 124
+        ClientWidth = 670
+        object Label1: TLabel
+          Left = 8
+          Height = 13
+          Top = 23
+          Width = 78
+          Caption = 'New block start:'
+          Color = clBtnFace
+          ParentColor = False
+          Transparent = False
+        end
+        object Label2: TLabel
+          Left = 188
+          Height = 13
+          Top = 21
+          Width = 73
+          Caption = 'New block end:'
+          Color = clBtnFace
+          ParentColor = False
+          Transparent = False
+        end
+        object lblSaveNewFileProgress: TLabel
+          Left = 380
+          Height = 13
+          Top = 60
+          Width = 117
+          Caption = 'Save/Export Progress...'
+          ParentColor = False
+        end
+        object lblExportToSQLiteProgress: TLabel
+          Left = 380
+          Height = 13
+          Top = 92
+          Width = 117
+          Caption = 'Save/Export Progress...'
+          ParentColor = False
+        end
+        object ebNewBlockStart: TEdit
+          Left = 98
+          Height = 21
+          Top = 18
+          Width = 66
+          TabOrder = 0
+        end
+        object ebNewBlockEnd: TEdit
+          Left = 283
+          Height = 21
+          Top = 18
+          Width = 66
+          TabOrder = 1
+        end
+        object bbExportToFile: TBitBtn
+          Left = 8
+          Height = 25
+          Top = 55
+          Width = 244
+          Caption = 'Save new file'
+          Glyph.Data = {
+            36030000424D3603000000000000360000002800000010000000100000000100
+            18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+            FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+            FFFF00FFFF00FFFF00FFFF00FFFF00FF97433F97433FB59A9BB59A9BB59A9BB5
+            9A9BB59A9BB59A9BB59A9B93303097433FFF00FFFF00FFFF00FFFF00FF97433F
+            D66868C66060E5DEDF92292A92292AE4E7E7E0E3E6D9DFE0CCC9CC8F201FAF46
+            4697433FFF00FFFF00FFFF00FF97433FD06566C25F5FE9E2E292292A92292AE2
+            E1E3E2E6E8DDE2E4CFCCCF8F2222AD464697433FFF00FFFF00FFFF00FF97433F
+            D06565C15D5DECE4E492292A92292ADFDDDFE1E6E8E0E5E7D3D0D28A1E1EAB44
+            4497433FFF00FFFF00FFFF00FF97433FD06565C15B5CEFE6E6EDE5E5E5DEDFE0
+            DDDFDFE0E2E0E1E3D6D0D2962A2AB24A4A97433FFF00FFFF00FFFF00FF97433F
+            CD6263C86060C96767CC7272CA7271C66969C46464CC6D6CCA6667C55D5DCD65
+            6597433FFF00FFFF00FFFF00FF97433FB65553C27B78D39D9CD7A7A5D8A7A6D8
+            A6A5D7A09FD5A09FD7A9A7D8ABABCC666797433FFF00FFFF00FFFF00FF97433F
+            CC6667F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9CC66
+            6797433FFF00FFFF00FFFF00FF97433FCC6667F9F9F9F9F9F9F9F9F9F9F9F9F9
+            F9F9F9F9F9F9F9F9F9F9F9F9F9F9CC666797433FFF00FFFF00FFFF00FF97433F
+            CC6667F9F9F9CDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDF9F9F9CC66
+            6797433FFF00FFFF00FFFF00FF97433FCC6667F9F9F9F9F9F9F9F9F9F9F9F9F9
+            F9F9F9F9F9F9F9F9F9F9F9F9F9F9CC666797433FFF00FFFF00FFFF00FF97433F
+            CC6667F9F9F9CDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDF9F9F9CC66
+            6797433FFF00FFFF00FFFF00FF97433FCC6667F9F9F9F9F9F9F9F9F9F9F9F9F9
+            F9F9F9F9F9F9F9F9F9F9F9F9F9F9CC666797433FFF00FFFF00FFFF00FFFF00FF
+            97433FF9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F9F99743
+            3FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+            00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          }
+          OnClick = bbExportToFileClick
+          TabOrder = 2
+        end
+        object ProgressBar: TProgressBar
+          Left = 258
+          Height = 25
+          Top = 55
+          Width = 116
+          Max = 440000
+          Position = 440000
+          TabOrder = 3
+        end
+        object bbExportToSQLite: TButton
+          Left = 8
+          Height = 25
+          Top = 86
+          Width = 244
+          Caption = 'Export Blockchain To SQLite'
+          OnClick = bbExportToSQLiteClick
+          TabOrder = 4
+        end
+        object ProgressBarSQLite: TProgressBar
+          Left = 258
+          Height = 25
+          Top = 86
+          Width = 116
+          Max = 440000
+          Position = 440000
+          TabOrder = 5
+        end
+      end
+    end
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 286
+    Top = 201
+    Width = 697
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 286
+    ClientWidth = 697
+    TabOrder = 1
+    object memoFileInfo: TMemo
+      Left = 0
+      Height = 286
+      Top = 0
+      Width = 697
+      Align = alClient
+      Lines.Strings = (
+        'memoFileInfo'
+      )
+      ReadOnly = True
+      ScrollBars = ssBoth
+      TabOrder = 0
+    end
+  end
+  object FileOpenDialog: TOpenDialog
+    Options = []
+    left = 340
+    top = 20
+  end
+  object SaveDialog: TSaveDialog
+    left = 525
+    top = 295
+  end
+end
