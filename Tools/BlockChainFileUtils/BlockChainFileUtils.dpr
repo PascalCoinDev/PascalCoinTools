@@ -1,9 +1,13 @@
 program BlockChainFileUtils;
 
 uses
-  Forms, {$IFDEF FPC}Interfaces,{$ENDIF}
+  Forms,
+  {$IFDEF FPC}
+  Interfaces,
+  {$ENDIF }
   UFRMBlockChainFileUtils in 'Gui\UFRMBlockChainFileUtils.pas',
-  UExportTo in 'core\UExportTo.pas';
+  UExportTo in 'core\UExportTo.pas',
+  USQLiteStorage in 'core\USQLiteStorage.pas';
 
 {$R *.res}
 

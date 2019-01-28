@@ -45,7 +45,7 @@ unit USQLiteStorage;
 interface
 
 uses
-  Classes, SysUtils, UBlockchain, UThread, UCrypto, math, UAccounts, ULog, SQLite3, SQLite3Wrap, SQLite3Utils, UConst;
+  Classes, SysUtils, UBlockchain, UThread, UCrypto, math, UAccounts, ULog, SQLite3, SQLite3Wrap, SQLite3Utils, UConst, UBaseTypes;
 
 const
   CT_TblName_BlockChain = 'tblockchain'; // This table stores each Block info and also RAW data of the block
@@ -406,7 +406,7 @@ begin
          SQLV_Integer(Operations.OperationBlock.timestamp),
          SQLV_String(IntToHex(Operations.OperationBlock.compact_target,8)),
          SQLV_Integer(Operations.OperationBlock.nonce),
-         SQLV_String(Operations.OperationBlock.block_payload ),
+         SQLV_String(Operations.OperationBlock.block_payload.ToString ),
          SQLV_String(TCrypto.ToHexaString(Operations.OperationBlock.initial_safe_box_hash)),
          SQLV_String(TCrypto.ToHexaString(Operations.OperationBlock.operations_hash)),
          SQLV_String(TCrypto.ToHexaString(Operations.OperationBlock.proof_of_work)),
@@ -588,7 +588,7 @@ begin
           nSize := stat.ColumnBytes(0);
           ms.Write(stat.ColumnBlob(0)^,nSize);
           ms.Position:=0;
-          If Not Bank.LoadBankFromStream(ms,False,'',Nil,restoreProgressNotify,errors) then begin
+          If Not Bank.LoadBankFromStream(ms,False,Nil,Nil,restoreProgressNotify,errors) then begin
             TLog.NewLog(lterror,Classname,Format('Error restoring safebox block:%d error:%s',[nBlock,errors]) );
             Exit;
           end;
