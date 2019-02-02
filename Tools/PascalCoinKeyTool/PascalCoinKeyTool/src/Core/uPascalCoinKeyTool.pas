@@ -121,7 +121,7 @@ type
     class function ComputeAES256_CBC_PKCS7PADDING_PascalCoinEncrypt(const APlainTextBytes, APasswordBytes: TBytes): TBytes; static;
     class function ComputeAES256_CBC_PKCS7PADDING_PascalCoinDecrypt(const ACipherTextBytes, APasswordBytes: TBytes; out APlainText: TBytes): boolean; static;
     class function GetPascalCoinPublicKeyAsHexString(AKeyType: TKeyType; const AXInput, AYInput: TBytes): string; static; inline;
-    class function GetPascalCoinPublicKeyAsBase58(const APascalCoinPublicKey: string): String; static; inline;
+    class function GetPascalCoinPublicKeyAsBase58(const APascalCoinPublicKey: string): String; static;
     class function GetPascalCoinPrivateKeyAsHexString(AKeyType: TKeyType; const AInput: TBytes): string; static; inline;
     class function GetPascalCoinPrivateKeyEncryptedAsHexString(const APascalCoinPrivateKey, APassword: string): string; static; inline;
     class function GetPrivateKeyPrefix(AKeyType: TKeyType; const AInput: TBytes): TBytes; static; inline;

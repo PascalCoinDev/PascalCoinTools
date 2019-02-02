@@ -42,6 +42,7 @@ type
     edtAESPayload: TEdit;
     edtPrivateKey: TEdit;
     edtECIESKey: TEdit;
+    lblKeyType: TLabel;
     mmoAESLoggerMemo: TMemo;
     mmoStressTestLoggerMemo: TMemo;
     mmoPrivateKeyLoggerMemo: TMemo;
@@ -70,6 +71,7 @@ type
     procedure btnStressTestClick(Sender: TObject);
     procedure cmbAESEncryptionModesChange(Sender: TObject);
     procedure cmbECIESEncryptionModesChange(Sender: TObject);
+    procedure cmbKeyTypesChange(Sender: TObject);
     procedure cmbPrivateKeyEncryptionModesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnGenerateKeyPairClick(Sender: TObject);
@@ -102,25 +104,39 @@ var
   AESEncryptionMode: TAESEncryptionMode;
 begin
   cmbKeyTypes.Clear;
-  for  KeyType in TKeyType do
+  for KeyType := Low(TKeyType) to High(TKeyType) do
+  begin
     cmbKeyTypes.AddItem(GetEnumName(TypeInfo(TKeyType), Ord(KeyType)), TObject(KeyType));
+  end;
   cmbKeyTypes.ItemIndex := 0;
+  cmbKeyTypesChange(Self);
 
   cmbPrivateKeyEncryptionModes.Clear;
-  for PrivateKeyEncryptionMode in TPrivateKeyEncryptionMode do
-    cmbPrivateKeyEncryptionModes.AddItem(GetEnumName(TypeInfo(TPrivateKeyEncryptionMode), Ord(PrivateKeyEncryptionMode)), TObject(PrivateKeyEncryptionMode));
+  for PrivateKeyEncryptionMode :=
+    Low(TPrivateKeyEncryptionMode) to High(TPrivateKeyEncryptionMode) do
+  begin
+    cmbPrivateKeyEncryptionModes.AddItem(
+      GetEnumName(TypeInfo(TPrivateKeyEncryptionMode), Ord(PrivateKeyEncryptionMode)),
+      TObject(PrivateKeyEncryptionMode));
+  end;
   cmbPrivateKeyEncryptionModes.ItemIndex := 0;
   cmbPrivateKeyEncryptionModesChange(Self);
 
   cmbECIESEncryptionModes.Clear;
-  for ECIESEncryptionMode in TECIESEncryptionMode do
-    cmbECIESEncryptionModes.AddItem(GetEnumName(TypeInfo(TECIESEncryptionMode), Ord(ECIESEncryptionMode)), TObject(ECIESEncryptionMode));
+  for ECIESEncryptionMode := Low(TECIESEncryptionMode) to High(TECIESEncryptionMode) do
+  begin
+    cmbECIESEncryptionModes.AddItem(GetEnumName(TypeInfo(TECIESEncryptionMode),
+      Ord(ECIESEncryptionMode)), TObject(ECIESEncryptionMode));
+  end;
   cmbECIESEncryptionModes.ItemIndex := 0;
   cmbECIESEncryptionModesChange(Self);
 
   cmbAESEncryptionModes.Clear;
-  for AESEncryptionMode in TAESEncryptionMode do
-    cmbAESEncryptionModes.AddItem(GetEnumName(TypeInfo(TAESEncryptionMode), Ord(AESEncryptionMode)), TObject(AESEncryptionMode));
+  for AESEncryptionMode := Low(TAESEncryptionMode) to High(TAESEncryptionMode) do
+  begin
+    cmbAESEncryptionModes.AddItem(GetEnumName(TypeInfo(TAESEncryptionMode),
+      Ord(AESEncryptionMode)), TObject(AESEncryptionMode));
+  end;
   cmbAESEncryptionModes.ItemIndex := 0;
   cmbAESEncryptionModesChange(Self);
 end;
@@ -146,7 +162,8 @@ var
   Logger: TStringList;
   Payload: string;
 begin
-  CurrentlySelected := TAESEncryptionMode(GetEnumValue(TypeInfo(TAESEncryptionMode), cmbAESEncryptionModes.Items[cmbAESEncryptionModes.ItemIndex]));
+  CurrentlySelected := TAESEncryptionMode(GetEnumValue(TypeInfo(TAESEncryptionMode),
+    cmbAESEncryptionModes.Items[cmbAESEncryptionModes.ItemIndex]));
   case CurrentlySelected of
     TAESEncryptionMode.Encrypt:
     begin
@@ -155,8 +172,9 @@ begin
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.EncryptPascalCoinAESPayload(edtAESPayloadPassword.Text, Payload, Logger);
-          mmoAESLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.EncryptPascalCoinAESPayload(edtAESPayloadPassword.Text,
+            Payload, Logger);
+          mmoAESLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -170,8 +188,9 @@ begin
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.DecryptPascalCoinAESPayload(edtAESPayloadPassword.Text, Payload, Logger);
-          mmoAESLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.DecryptPascalCoinAESPayload(edtAESPayloadPassword.Text,
+            Payload, Logger);
+          mmoAESLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -197,8 +216,11 @@ var
   Logger: TStringList;
   PascalCoinPublicKey, EncryptedPascalCoinPrivateKey, Payload: string;
 begin
-  CurrentlySelected := TECIESEncryptionMode(GetEnumValue(TypeInfo(TECIESEncryptionMode), cmbECIESEncryptionModes.Items[cmbECIESEncryptionModes.ItemIndex]));
-  SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType), cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
+  CurrentlySelected := TECIESEncryptionMode(
+    GetEnumValue(TypeInfo(TECIESEncryptionMode),
+    cmbECIESEncryptionModes.Items[cmbECIESEncryptionModes.ItemIndex]));
+  SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType),
+    cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
   case CurrentlySelected of
     TECIESEncryptionMode.Encrypt:
     begin
@@ -208,8 +230,9 @@ begin
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.EncryptPascalCoinECIESPayload(SelectedKeyType, PascalCoinPublicKey, Payload, Logger);
-          mmoECIESLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.EncryptPascalCoinECIESPayload(SelectedKeyType,
+            PascalCoinPublicKey, Payload, Logger);
+          mmoECIESLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -224,8 +247,10 @@ begin
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.DecryptPascalCoinECIESPayload(SelectedKeyType, EncryptedPascalCoinPrivateKey, edtECIESPrivateKeyPassword.Text, Payload, Logger);
-          mmoECIESLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.DecryptPascalCoinECIESPayload(SelectedKeyType,
+            EncryptedPascalCoinPrivateKey, edtECIESPrivateKeyPassword.Text,
+            Payload, Logger);
+          mmoECIESLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -241,18 +266,22 @@ var
   Logger: TStringList;
   PrivateKeyToEncrypt, EncryptedPascalCoinPrivateKey: string;
 begin
-  CurrentlySelected := TPrivateKeyEncryptionMode(GetEnumValue(TypeInfo(TPrivateKeyEncryptionMode), cmbPrivateKeyEncryptionModes.Items[cmbPrivateKeyEncryptionModes.ItemIndex]));
+  CurrentlySelected := TPrivateKeyEncryptionMode(
+    GetEnumValue(TypeInfo(TPrivateKeyEncryptionMode),
+    cmbPrivateKeyEncryptionModes.Items[cmbPrivateKeyEncryptionModes.ItemIndex]));
   case CurrentlySelected of
     TPrivateKeyEncryptionMode.Encrypt:
     begin
-      SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType), cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
+      SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType),
+        cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
       PrivateKeyToEncrypt := Trim(edtPrivateKey.Text);
       if PrivateKeyToEncrypt <> '' then
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.EncryptPascalCoinPrivateKey(SelectedKeyType, PrivateKeyToEncrypt, edtPrivateKeyPassword.Text, Logger);
-          mmoPrivateKeyLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.EncryptPascalCoinPrivateKey(SelectedKeyType,
+            PrivateKeyToEncrypt, edtPrivateKeyPassword.Text, Logger);
+          mmoPrivateKeyLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -266,8 +295,9 @@ begin
       begin
         Logger := TStringList.Create();
         try
-          TPascalCoinKeyTool.DecryptPascalCoinPrivateKey(EncryptedPascalCoinPrivateKey, edtPrivateKeyPassword.Text, Logger);
-          mmoPrivateKeyLoggerMemo.Lines.AddStrings(Logger, False);
+          TPascalCoinKeyTool.DecryptPascalCoinPrivateKey(EncryptedPascalCoinPrivateKey,
+            edtPrivateKeyPassword.Text, Logger);
+          mmoPrivateKeyLoggerMemo.Lines.AddStrings(Logger);
         finally
           Logger.Free;
         end;
@@ -281,12 +311,14 @@ var
   SelectedKeyType: TKeyType;
   Logger: TStringList;
 begin
-  SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType), cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
+  SelectedKeyType := TKeyType(GetEnumValue(TypeInfo(TKeyType),
+    cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
   Logger := TStringList.Create();
   try
     btnStressTest.Enabled := False;
-    TPascalCoinKeyTool.Generate_Recreate_Sign_Verify_ECDSA_Stress_Test(SelectedKeyType, edtMessageToSign.Text, speIterationCount.Value, Logger);
-    mmoStressTestLoggerMemo.Lines.AddStrings(Logger, False);
+    TPascalCoinKeyTool.Generate_Recreate_Sign_Verify_ECDSA_Stress_Test(
+      SelectedKeyType, edtMessageToSign.Text, speIterationCount.Value, Logger);
+    mmoStressTestLoggerMemo.Lines.AddStrings(Logger);
   finally
     Logger.Free;
     btnStressTest.Enabled := True;
@@ -297,7 +329,8 @@ procedure TMainForm.cmbAESEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TAESEncryptionMode;
 begin
-  CurrentlySelected := TAESEncryptionMode(GetEnumValue(TypeInfo(TAESEncryptionMode), cmbAESEncryptionModes.Items[cmbAESEncryptionModes.ItemIndex]));
+  CurrentlySelected := TAESEncryptionMode(GetEnumValue(TypeInfo(TAESEncryptionMode),
+    cmbAESEncryptionModes.Items[cmbAESEncryptionModes.ItemIndex]));
   case CurrentlySelected of
     TAESEncryptionMode.Encrypt:
     begin
@@ -319,7 +352,9 @@ procedure TMainForm.cmbECIESEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TECIESEncryptionMode;
 begin
-  CurrentlySelected := TECIESEncryptionMode(GetEnumValue(TypeInfo(TECIESEncryptionMode), cmbECIESEncryptionModes.Items[cmbECIESEncryptionModes.ItemIndex]));
+  CurrentlySelected := TECIESEncryptionMode(
+    GetEnumValue(TypeInfo(TECIESEncryptionMode),
+    cmbECIESEncryptionModes.Items[cmbECIESEncryptionModes.ItemIndex]));
   case CurrentlySelected of
     TECIESEncryptionMode.Encrypt:
     begin
@@ -342,11 +377,22 @@ begin
   end;
 end;
 
+procedure TMainForm.cmbKeyTypesChange(Sender: TObject);
+var
+  CurrentlySelected: TKeyType;
+begin
+  CurrentlySelected := TKeyType(GetEnumValue(TypeInfo(TKeyType),
+    cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
+  lblKeyType.Caption := Format('%s Curve Selected for Key Type', [GetEnumName(TypeInfo(TKeyType), Ord(CurrentlySelected))]);
+end;
+
 procedure TMainForm.cmbPrivateKeyEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TPrivateKeyEncryptionMode;
 begin
-  CurrentlySelected := TPrivateKeyEncryptionMode(GetEnumValue(TypeInfo(TPrivateKeyEncryptionMode), cmbPrivateKeyEncryptionModes.Items[cmbPrivateKeyEncryptionModes.ItemIndex]));
+  CurrentlySelected := TPrivateKeyEncryptionMode(
+    GetEnumValue(TypeInfo(TPrivateKeyEncryptionMode),
+    cmbPrivateKeyEncryptionModes.Items[cmbPrivateKeyEncryptionModes.ItemIndex]));
   case CurrentlySelected of
     TPrivateKeyEncryptionMode.Encrypt:
     begin
@@ -370,8 +416,11 @@ var
 begin
   Logger := TStringList.Create();
   try
-    TPascalCoinKeyTool.GenerateKeyPairAndLog(TKeyType(GetEnumValue(TypeInfo(TKeyType), cmbKeyTypes.Items[cmbKeyTypes.ItemIndex])), edtEncryptPassword.Text, Logger);
-    mmoLoggerMemo.Lines.AddStrings(Logger, False);
+    TPascalCoinKeyTool.GenerateKeyPairAndLog(
+      TKeyType(GetEnumValue(TypeInfo(TKeyType),
+      cmbKeyTypes.Items[cmbKeyTypes.ItemIndex])),
+      edtEncryptPassword.Text, Logger);
+    mmoLoggerMemo.Lines.AddStrings(Logger);
   finally
     Logger.Free;
   end;

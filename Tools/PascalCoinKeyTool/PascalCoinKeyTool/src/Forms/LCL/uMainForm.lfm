@@ -4,7 +4,7 @@ object MainForm: TMainForm
   Top = 250
   Width = 856
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'PascalCoinKeyTool v0.3 By Xor-el (https://github.com/xor-el)'
+  Caption = 'PascalCoinKeyTool v0.4 By Xor-el (https://github.com/xor-el)'
   ClientHeight = 531
   ClientWidth = 856
   Font.CharSet = ANSI_CHARSET
@@ -360,8 +360,26 @@ object MainForm: TMainForm
       Width = 148
       Anchors = [akTop, akRight]
       ItemHeight = 15
+      OnChange = cmbKeyTypesChange
       Style = csDropDownList
       TabOrder = 1
+    end
+    object lblKeyType: TLabel
+      Left = 585
+      Height = 15
+      Top = 21
+      Width = 69
+      Anchors = [akTop, akRight]
+      Caption = 'lblKeyType'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Constantia'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
     end
   end
 end

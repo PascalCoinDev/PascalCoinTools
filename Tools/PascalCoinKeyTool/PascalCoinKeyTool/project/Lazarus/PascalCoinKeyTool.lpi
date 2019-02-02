@@ -26,7 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="src\core;src\forms"/>
+            <OtherUnitFiles Value="..\..\src\Core;..\..\src\Forms\LCL"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -81,15 +81,15 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="src\Forms\uMainForm.pas"/>
+        <Filename Value="..\..\src\Core\uPascalCoinKeyTool.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\src\Forms\LCL\uMainForm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="src\Core\uPascalCoinKeyTool.pas"/>
-        <IsPartOfProject Value="True"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -101,7 +101,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="src\Core;src\Forms"/>
+      <OtherUnitFiles Value="..\..\src\Core;..\..\src\Forms\LCL"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
