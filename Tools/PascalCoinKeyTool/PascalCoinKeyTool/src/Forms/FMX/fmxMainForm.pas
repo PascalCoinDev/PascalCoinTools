@@ -26,7 +26,7 @@ uses
   FMX.Controls.Presentation, FMX.Edit, FMX.StdCtrls, FMX.EditBox, FMX.SpinBox;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     TabControl1: TTabControl;
     TabItem1: TTabItem;
     TabItem2: TTabItem;
@@ -64,6 +64,7 @@ type
     Button6: TButton;
     btnECIESEncryptDecrypt: TButton;
     edtECIESPayload: TEdit;
+    KeyType: TLabel;
     procedure btnAESEncryptDecryptClick(Sender: TObject);
     procedure btnECIESEncryptDecryptClick(Sender: TObject);
     procedure btnEncryptDecryptPrivateKeyClick(Sender: TObject);
@@ -76,6 +77,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure cmbAESEncryptionModesChange(Sender: TObject);
     procedure cmbECIESEncryptionModesChange(Sender: TObject);
+    procedure cmbKeyTypesChange(Sender: TObject);
     procedure cmbPrivateKeyEncryptionModesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -91,7 +93,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  MainForm: TMainForm;
 
 implementation
 
@@ -99,7 +101,7 @@ implementation
 
 uses uPascalCoinKeyTool, TypInfo, System.Rtti;
 
-procedure TForm1.btnAESEncryptDecryptClick(Sender: TObject);
+procedure TMainForm.btnAESEncryptDecryptClick(Sender: TObject);
 var
   CurrentlySelected: TAESEncryptionMode;
   Logger: TStringList;
@@ -139,7 +141,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnECIESEncryptDecryptClick(Sender: TObject);
+procedure TMainForm.btnECIESEncryptDecryptClick(Sender: TObject);
 var
   CurrentlySelected: TECIESEncryptionMode;
   SelectedKeyType: TKeyType;
@@ -186,7 +188,7 @@ begin
   end;
 end;
 
-procedure TForm1.btnEncryptDecryptPrivateKeyClick(Sender: TObject);
+procedure TMainForm.btnEncryptDecryptPrivateKeyClick(Sender: TObject);
 var
   CurrentlySelected: TPrivateKeyEncryptionMode;
   SelectedKeyType: TKeyType;
@@ -231,7 +233,7 @@ begin
 
 end;
 
-procedure TForm1.btnStressTestClick(Sender: TObject);
+procedure TMainForm.btnStressTestClick(Sender: TObject);
 var
   SelectedKeyType: TKeyType;
   Logger: TStringList;
@@ -251,12 +253,12 @@ begin
   end;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TMainForm.Button1Click(Sender: TObject);
 begin
   mmoLoggerMemo.Lines.Clear;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TMainForm.Button2Click(Sender: TObject);
 var
   Logger: TStringList;
   lKeyType: TKeyType;
@@ -271,27 +273,27 @@ begin
   end;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TMainForm.Button3Click(Sender: TObject);
 begin
-  mmoStressTestLoggerMemo.ClearSelection;
+  mmoStressTestLoggerMemo.DeleteSelection;
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TMainForm.Button4Click(Sender: TObject);
 begin
   mmoPrivateKeyLoggerMemo.ClearContent;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TMainForm.Button5Click(Sender: TObject);
 begin
   mmoAESLoggerMemo.ClearContent;
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TMainForm.Button6Click(Sender: TObject);
 begin
   mmoECIESLoggerMemo.ClearContent;
 end;
 
-procedure TForm1.cmbAESEncryptionModesChange(Sender: TObject);
+procedure TMainForm.cmbAESEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TAESEncryptionMode;
 begin
@@ -313,7 +315,7 @@ begin
   end;
 end;
 
-procedure TForm1.cmbECIESEncryptionModesChange(Sender: TObject);
+procedure TMainForm.cmbECIESEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TECIESEncryptionMode;
 begin
@@ -341,7 +343,16 @@ begin
   end;
 end;
 
-procedure TForm1.cmbPrivateKeyEncryptionModesChange(Sender: TObject);
+procedure TMainForm.cmbKeyTypesChange(Sender: TObject);
+var
+  CurrentlySelected: TKeyType;
+begin
+  CurrentlySelected := TKeyType(GetEnumValue(TypeInfo(TKeyType),
+    cmbKeyTypes.Items[cmbKeyTypes.ItemIndex]));
+  KeyType.Text := TRttiEnumerationType.GetName<TKeyType>(CurrentlySelected);
+end;
+
+procedure TMainForm.cmbPrivateKeyEncryptionModesChange(Sender: TObject);
 var
   CurrentlySelected: TPrivateKeyEncryptionMode;
 begin
@@ -363,7 +374,7 @@ begin
   end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 var
   KeyType: TKeyType;
   lName: string;
@@ -379,6 +390,7 @@ begin
     cmbKeyTypes.Items.Add(lName);
   end;
   cmbKeyTypes.ItemIndex := 0;
+  cmbKeyTypesChange(Self);
 
   cmbPrivateKeyEncryptionModes.Clear;
   for PrivateKeyEncryptionMode := Low(TPrivateKeyEncryptionMode) to High(TPrivateKeyEncryptionMode) do
