@@ -1,0 +1,400 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 517
+  ClientWidth = 330
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 2
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 330.000000000000000000
+    Size.Height = 467.000000000000000000
+    Size.PlatformDefault = False
+    TabHeight = 49.000000000000000000
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    Sizes = (
+      330s
+      418s
+      330s
+      418s
+      330s
+      418s
+      330s
+      418s
+      330s
+      418s)
+    object TabItem1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.WordWrap = True
+      IsSelected = True
+      Size.Width = 66.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Generate Key Pair'
+      ExplicitSize.cx = 165.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object edtEncryptPassword: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Position.X = 8.000000000000000000
+        Position.Y = 6.000000000000000000
+        Size.Width = 169.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'Private Key Password'
+      end
+      object mmoLoggerMemo: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 8.000000000000000000
+        Position.Y = 46.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 323.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Viewport.Width = 289.000000000000000000
+        Viewport.Height = 315.000000000000000000
+      end
+      object Button1: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 376.000000000000000000
+        TabOrder = 2
+        Text = 'Clear'
+        OnClick = Button1Click
+      end
+      object Button2: TButton
+        Position.X = 224.000000000000000000
+        Position.Y = 376.000000000000000000
+        TabOrder = 3
+        Text = 'Generate'
+        OnClick = Button2Click
+      end
+    end
+    object TabItem2: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.WordWrap = True
+      IsSelected = False
+      Size.Width = 66.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Stress Test'
+      ExplicitSize.cx = 165.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object speIterationCount: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        Value = 1.000000000000000000
+        Position.X = 208.000000000000000000
+        Position.Y = 8.000000000000000000
+      end
+      object edtMessageToSign: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 8.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'message to sign'
+      end
+      object Label1: TLabel
+        Position.X = 120.000000000000000000
+        Position.Y = 13.000000000000000000
+        Text = 'Iterations'
+        TabOrder = 3
+      end
+      object mmoStressTestLoggerMemo: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 8.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 281.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Viewport.Width = 289.000000000000000000
+        Viewport.Height = 273.000000000000000000
+      end
+      object Button3: TButton
+        Position.X = 16.000000000000000000
+        Position.Y = 368.000000000000000000
+        TabOrder = 5
+        Text = 'Clear'
+        OnClick = Button3Click
+      end
+      object btnStressTest: TButton
+        Position.X = 240.000000000000000000
+        Position.Y = 368.000000000000000000
+        TabOrder = 6
+        Text = 'Stress Test'
+        OnClick = btnStressTestClick
+      end
+    end
+    object TabItem3: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.WordWrap = True
+      IsSelected = False
+      Size.Width = 66.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'En/Decrypt Private Key '
+      ExplicitSize.cx = 66.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object cmbPrivateKeyEncryptionModes: TComboBox
+        Position.X = 192.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cmbPrivateKeyEncryptionModesChange
+      end
+      object edtPrivateKeyPassword: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 161.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'password'
+      end
+      object mmoPrivateKeyLoggerMemo: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 8.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 281.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 289.000000000000000000
+        Viewport.Height = 273.000000000000000000
+      end
+      object Button4: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 376.000000000000000000
+        Size.Width = 73.000000000000000000
+        Size.Height = 38.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Clear'
+        OnClick = Button4Click
+      end
+      object btnEncryptDecryptPrivateKey: TButton
+        Position.X = 136.000000000000000000
+        Position.Y = 376.000000000000000000
+        Size.Width = 169.000000000000000000
+        Size.Height = 37.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = '....'
+        OnClick = btnEncryptDecryptPrivateKeyClick
+      end
+      object edtPrivateKey: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Position.X = 8.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object TabItem4: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.WordWrap = True
+      IsSelected = False
+      Size.Width = 66.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'En/Decrypt AES Payload'
+      ExplicitSize.cx = 66.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object edtAESPayloadPassword: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Position.X = 16.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 161.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'password'
+      end
+      object cmbAESEncryptionModes: TComboBox
+        Position.X = 200.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cmbAESEncryptionModesChange
+      end
+      object edtAESPayload: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Position.X = 16.000000000000000000
+        Position.Y = 56.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object mmoAESLoggerMemo: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 16.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 281.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 289.000000000000000000
+        Viewport.Height = 273.000000000000000000
+      end
+      object Button5: TButton
+        Position.X = 16.000000000000000000
+        Position.Y = 380.000000000000000000
+        Size.Width = 73.000000000000000000
+        Size.Height = 38.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Clear'
+        OnClick = Button5Click
+      end
+      object btnAESEncryptDecrypt: TButton
+        Position.X = 144.000000000000000000
+        Position.Y = 381.000000000000000000
+        Size.Width = 169.000000000000000000
+        Size.Height = 37.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = '....'
+        OnClick = btnAESEncryptDecryptClick
+      end
+    end
+    object TabItem5: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.WordWrap = True
+      IsSelected = False
+      Size.Width = 66.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'En/Decrypt ECIES Payload'
+      ExplicitSize.cx = 66.000000000000000000
+      ExplicitSize.cy = 49.000000000000000000
+      object edtECIESPrivateKeyPassword: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 161.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'password'
+      end
+      object cmbECIESEncryptionModes: TComboBox
+        Position.X = 192.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cmbECIESEncryptionModesChange
+      end
+      object edtECIESKey: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 6
+        Position.X = 8.000000000000000000
+        Position.Y = 40.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'ECIES Key'
+      end
+      object mmoECIESLoggerMemo: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Position.X = 8.000000000000000000
+        Position.Y = 112.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 273.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 289.000000000000000000
+        Viewport.Height = 265.000000000000000000
+      end
+      object Button6: TButton
+        Position.X = 24.000000000000000000
+        Position.Y = 380.000000000000000000
+        Size.Width = 73.000000000000000000
+        Size.Height = 38.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Clear'
+        OnClick = Button6Click
+      end
+      object btnECIESEncryptDecrypt: TButton
+        Position.X = 152.000000000000000000
+        Position.Y = 381.000000000000000000
+        Size.Width = 169.000000000000000000
+        Size.Height = 37.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = '....'
+        OnClick = btnECIESEncryptDecryptClick
+      end
+      object edtECIESPayload: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 5
+        Position.X = 8.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 297.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'payload'
+      end
+    end
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 330.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object cmbKeyTypes: TComboBox
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 193.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+  end
+end
