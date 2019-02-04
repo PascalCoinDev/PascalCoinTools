@@ -416,7 +416,7 @@ object MainForm: TMainForm
     end
     object KeyType: TLabel
       Position.X = 216.000000000000000000
-      Position.Y = 14.000000000000000000
+      Position.Y = 16.000000000000000000
       Text = 'KeyType'
       TabOrder = 1
     end
