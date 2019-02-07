@@ -776,7 +776,7 @@ var
   LPrivateKey: IECPrivateKeyParameters;
 begin
   LPrivateKey := AKeyPair.&Private as IECPrivateKeyParameters;
-  Result := LPrivateKey.D.ToByteArray();
+  Result := LPrivateKey.D.ToByteArrayUnsigned();
 end;
 
 class function TPascalCoinKeyTool.GetPublicKeyAffineX(const AKeyPair: IAsymmetricCipherKeyPair): TBytes;
@@ -784,7 +784,7 @@ var
   LPublicKey: IECPublicKeyParameters;
 begin
   LPublicKey := AKeyPair.&Public as IECPublicKeyParameters;
-  Result := LPublicKey.Q.AffineXCoord.ToBigInteger().ToByteArray();
+  Result := LPublicKey.Q.AffineXCoord.ToBigInteger().ToByteArrayUnsigned();
 end;
 
 class function TPascalCoinKeyTool.GetPublicKeyAffineY(const AKeyPair: IAsymmetricCipherKeyPair): TBytes;
@@ -792,7 +792,7 @@ var
   LPublicKey: IECPublicKeyParameters;
 begin
   LPublicKey := AKeyPair.&Public as IECPublicKeyParameters;
-  Result := LPublicKey.Q.AffineYCoord.ToBigInteger().ToByteArray();
+  Result := LPublicKey.Q.AffineYCoord.ToBigInteger().ToByteArrayUnsigned();
 end;
 
 class procedure TPascalCoinKeyTool.GenerateKeyPairAndLog(AKeyType: TKeyType; const APassword: string; var Logger: TStringList);
@@ -1159,9 +1159,9 @@ begin
     LPublicKeyXCoordBigInteger := TBigInteger.Create(LPublicKeyXCoord);
     LPublicKeyYCoordBigInteger := TBigInteger.Create(LPublicKeyYCoord);
 
-    Logger.Append(Format('Private Key is %s and Sign is %s', [ComputeBase16EncodeUpper(LPrivateKeyBigInteger.ToByteArray()), GetSignAsString(LPrivateKeyBigInteger.SignValue)]));
-    Logger.Append(Format('Public Key AffineX Coord is %s and Sign is %s', [ComputeBase16EncodeUpper(LPublicKeyXCoordBigInteger.ToByteArray()), GetSignAsString(LPublicKeyXCoordBigInteger.SignValue)]));
-    Logger.Append(Format('Public Key AffineY Coord is %s and Sign is %s', [ComputeBase16EncodeUpper(LPublicKeyYCoordBigInteger.ToByteArray()), GetSignAsString(LPublicKeyYCoordBigInteger.SignValue)]));
+    Logger.Append(Format('Private Key is %s and Sign is %s', [ComputeBase16EncodeUpper(LPrivateKeyBigInteger.ToByteArrayUnsigned()), GetSignAsString(LPrivateKeyBigInteger.SignValue)]));
+    Logger.Append(Format('Public Key AffineX Coord is %s and Sign is %s', [ComputeBase16EncodeUpper(LPublicKeyXCoordBigInteger.ToByteArrayUnsigned()), GetSignAsString(LPublicKeyXCoordBigInteger.SignValue)]));
+    Logger.Append(Format('Public Key AffineY Coord is %s and Sign is %s', [ComputeBase16EncodeUpper(LPublicKeyYCoordBigInteger.ToByteArrayUnsigned()), GetSignAsString(LPublicKeyYCoordBigInteger.SignValue)]));
 
     PrivateKeyRecreated := RecreatePrivateKeyFromByteArray(AKeyType, LPrivateKey);
 
@@ -1175,9 +1175,9 @@ begin
 
     Logger.Append('Signature Generated Successfully.');
 
-    Logger.Append(Format('R Sig is %s', [ComputeBase16EncodeUpper(LSig[0].ToByteArray())]));
+    Logger.Append(Format('R Sig is %s', [ComputeBase16EncodeUpper(LSig[0].ToByteArrayUnsigned())]));
 
-    Logger.Append(Format('S Sig is %s', [ComputeBase16EncodeUpper(LSig[1].ToByteArray())]));
+    Logger.Append(Format('S Sig is %s', [ComputeBase16EncodeUpper(LSig[1].ToByteArrayUnsigned())]));
 
     PassVerify := DoECDSAVerify(PublicKeyRecreated, LMessage, LSig);
 
