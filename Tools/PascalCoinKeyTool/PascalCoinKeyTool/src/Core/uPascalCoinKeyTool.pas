@@ -33,7 +33,7 @@ uses
   ClpIECKeyGenerationParameters,
   ClpIECPrivateKeyParameters,
   ClpIAsymmetricCipherKeyPair,
-  ClpIIESWithCipherParameters,
+ ClpIIESParameterSpec,
   ClpIAsymmetricCipherKeyPairGenerator,
   ClpIPascalCoinECIESKdfBytesGenerator,
   ClpBits,
@@ -61,7 +61,7 @@ uses
   ClpParametersWithRandom,
   ClpECPublicKeyParameters,
   ClpECPrivateKeyParameters,
-  ClpIESWithCipherParameters,
+  ClpIESParameterSpec,
   ClpPaddedBufferedBlockCipher,
   ClpECKeyGenerationParameters,
   ClpPascalCoinECIESKdfBytesGenerator;
@@ -104,7 +104,7 @@ type
     class function ValidatePublicKeyHeader(AKeyType: TKeyType; const AInput: TBytes; out AErrorMessage: string): boolean; static;
     class function ValidatePrivateKeyHeader(AKeyType: TKeyType; const AInput: TBytes; out AErrorMessage: string): boolean; static;
     class function IsValidHexString(const AInput: string): boolean; static; inline;
-    class function GetIESCipherParameters: IIESWithCipherParameters; static;
+    class function GetIESParameterSpec: IIESParameterSpec; static;
     class function GetECIESPascalCoinCompatibilityEngine(): IPascalCoinIESEngine; static;
     class function ComputeECIESPascalCoinEncrypt(const APublicKey: IECPublicKeyParameters; const APayloadToEncrypt: TBytes): TBytes; static; inline;
     class function ComputeECIESPascalCoinDecrypt(const APrivateKey: IECPrivateKeyParameters; const APayloadToDecrypt: TBytes; out ADecryptedPayload: TBytes): boolean; static; inline;
@@ -410,13 +410,13 @@ begin
     end;
 end;
 
-class function TPascalCoinKeyTool.GetIESCipherParameters: IIESWithCipherParameters;
+class function TPascalCoinKeyTool.GetIESParameterSpec: IIESParameterSpec;
 var
   Derivation, Encoding, IVBytes: TBytes;
   MacKeySizeInBits, CipherKeySizeInBits: Int32;
   UsePointCompression: boolean;
 begin
-  // Set up IES Cipher Parameters For Compatibility With PascalCoin Current Implementation
+  // Set up IES Parameter Spec For Compatibility With PascalCoin Current Implementation
 
   // The derivation and encoding vectors are used when initialising the KDF and MAC.
   // They're optional but if used then they need to be known by the other user so that
@@ -437,7 +437,7 @@ begin
   // from a point or not in the EphemeralKeyPairGenerator
   UsePointCompression := True; // for compatibility
 
-  Result := TIESWithCipherParameters.Create(Derivation, Encoding,
+  Result := TIESParameterSpec.Create(Derivation, Encoding,
     MacKeySizeInBits, CipherKeySizeInBits, IVBytes, UsePointCompression);
 end;
 
@@ -478,7 +478,7 @@ var
 begin
   // Encryption
   CipherEncrypt := TIESCipher.Create(GetECIESPascalCoinCompatibilityEngine());
-  CipherEncrypt.Init(True, APublicKey, GetIESCipherParameters(), FRandom);
+  CipherEncrypt.Init(True, APublicKey, GetIESParameterSpec(), FRandom);
   Result := CipherEncrypt.DoFinal(APayloadToEncrypt);
 end;
 
@@ -489,7 +489,7 @@ begin
   try
     // Decryption
     CipherDecrypt := TIESCipher.Create(GetECIESPascalCoinCompatibilityEngine());
-    CipherDecrypt.Init(False, APrivateKey, GetIESCipherParameters(), FRandom);
+    CipherDecrypt.Init(False, APrivateKey, GetIESParameterSpec(), FRandom);
     ADecryptedPayload := System.Copy(CipherDecrypt.DoFinal(APayloadToDecrypt));
     Result := True;
   except
@@ -978,7 +978,7 @@ end;
 
 class procedure TPascalCoinKeyTool.DecryptPascalCoinECIESPayload(AKeyType: TKeyType; const AEncryptedPascalCoinPrivateKey, APrivateKeyPassword, APayloadToDecrypt: string; var Logger: TStringList);
 var
-  PascalCoinPrivateKey, DecryptedPayload, PayloadToDecrypt: TBytes;
+  PascalCoinPrivateKey, DecryptedPayload, PayloadToDecrypt, RawPrivateKey: TBytes;
   DecryptedSuccessfully: boolean;
   RecreatedPrivateKey: IECPrivateKeyParameters;
   ErrorMessage: string;
@@ -1022,7 +1022,11 @@ begin
     Exit;
   end;
 
-  RecreatedPrivateKey := RecreatePrivateKeyFromByteArray(AKeyType, ExtractPrivateKeyFromDecryptedPascalCoinPrivateKey(PascalCoinPrivateKey));
+  RawPrivateKey := ExtractPrivateKeyFromDecryptedPascalCoinPrivateKey(PascalCoinPrivateKey);
+
+  Logger.Append(Format('Raw Private Key is "%s"', [THex.Encode(RawPrivateKey)]));
+
+  RecreatedPrivateKey := RecreatePrivateKeyFromByteArray(AKeyType, RawPrivateKey);
 
   Logger.Append('Private Key Recreated');
 
