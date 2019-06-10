@@ -1,0 +1,62 @@
+object FRMRandomHashTableHardcoded: TFRMRandomHashTableHardcoded
+  Left = 425
+  Height = 284
+  Top = 236
+  Width = 554
+  Caption = 'RandomHash Table Hardcoded'
+  ClientHeight = 284
+  ClientWidth = 554
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.8.0.6'
+  object pnlTop: TPanel
+    Left = 0
+    Height = 96
+    Top = 0
+    Width = 554
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 96
+    ClientWidth = 554
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 9
+      Height = 15
+      Top = 10
+      Width = 324
+      Caption = 'This app creates a Hardcoded RandomHash digest/hash pairs'
+      ParentColor = False
+    end
+    object bbGenerateHardcodedFile: TButton
+      Left = 8
+      Height = 25
+      Top = 32
+      Width = 324
+      Caption = 'Generate a Hardcoded File from Safebox'
+      OnClick = bbGenerateHardcodedFileClick
+      TabOrder = 0
+    end
+    object bbCheckFile: TButton
+      Left = 8
+      Height = 25
+      Top = 60
+      Width = 324
+      Caption = 'Check a Hardcoded File'
+      OnClick = bbCheckFileClick
+      TabOrder = 1
+    end
+  end
+  object memo: TMemo
+    Left = 0
+    Height = 188
+    Top = 96
+    Width = 554
+    Align = alClient
+    Lines.Strings = (
+      'memo'
+    )
+    ScrollBars = ssBoth
+    TabOrder = 1
+    WordWrap = False
+  end
+end
