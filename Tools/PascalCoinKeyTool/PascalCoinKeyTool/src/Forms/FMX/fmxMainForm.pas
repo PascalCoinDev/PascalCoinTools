@@ -23,7 +23,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.ListBox,
   FMX.Layouts, FMX.TabControl, FMX.ScrollBox, FMX.Memo,
-  FMX.Controls.Presentation, FMX.Edit, FMX.StdCtrls, FMX.EditBox, FMX.SpinBox;
+  FMX.Controls.Presentation, FMX.Edit, FMX.StdCtrls, FMX.EditBox, FMX.SpinBox, FMX.Memo.Types;
 
 type
   TMainForm = class(TForm)
@@ -382,6 +382,15 @@ var
   ECIESEncryptionMode: TECIESEncryptionMode;
   AESEncryptionMode: TAESEncryptionMode;
 begin
+
+  {$IFDEF MSWINDOWS}
+  self.BorderStyle := TFMXFormBorderStyle.Sizeable;
+  {$ENDIF}
+
+  {$IFDEF MACOS}
+  self.BorderStyle := TFMXFormBorderStyle.Sizeable;
+  {$ENDIF}
+
   cmbKeyTypes.Clear;
 
   for KeyType := Low(TKeyType) to High(TKeyType) do
